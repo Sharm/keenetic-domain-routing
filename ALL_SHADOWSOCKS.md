@@ -86,6 +86,7 @@ iptables -t filter -I FORWARD -o eth3 -m mark --mark 0xffffd01 -j SS_FLT
 iptables -t filter -A SS_FLT -p udp -d xx.xx.xx.xx --dport 443 -j RETURN
 iptables -t filter -A SS_FLT -p tcp -d xx.xx.xx.xx --dport 443 -j RETURN
 iptables -t filter -A SS_FLT -m mark --mark 1 -j RETURN
+iptables -t filter -A SS_FLT -p tcp -m tcp --dport 1080 -j RETURN # accept local generated packets to outside, ex wget ya.ru
 iptables -t filter -A SS_FLT -p all -j REJECT
 ```
 Явно разрешаем только соединения на SS сервер и помеченные пакеты. Помеченные - это UDP трафик, идущий через TPROXY, у них будет оригинальный destination и по IP такие пакеты поймать невозможно. Все остальное REJECT. Обратите внимание на `iptables -t filter -I FORWARD` -I добавит правило в начало цепочки. Обычно на Keenetic FORWARD цепочка имеет policy DROP и содержит правила на ACCEPT, после срабатывания которых дальше уже проверка не пойдет. Поэтому надо нашу цепочку поставить **до** стандартных правил.
