@@ -67,6 +67,7 @@ ARGS="-c /opt/etc/shadowsocks.json"
 # Disable ndnproxy this way, coz dns-override sometimes switches back after reboot.
 iptables -F _NDM_HOTSPOT_DNSREDIR -t nat
 
+ipset list unblock > /dev/null 2>&1 && ipset flush unblock # flush if set exists
 ipset create unblock hash:net -exist
 
 # Create new chain
