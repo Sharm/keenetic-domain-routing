@@ -15,7 +15,7 @@
 2. 
    ```bash
    opkg update
-   opkg install mc dnsmasq-full ipset iptables shadowsocks-libev-ss-redir shadowsocks-libev-config
+   opkg install mc dnsmasq-full ipset iptables shadowsocks-libev-ss-redir shadowsocks-libev-config bind-dig
    ```
 
    С первого раза может не установится из-за ограниченной памяти и скачивания всего сразу, можно выполнить второй раз.
